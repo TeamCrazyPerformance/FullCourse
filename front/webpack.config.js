@@ -8,6 +8,7 @@ module.exports = {
     path: path.resolve(__dirname, "./dist"),
     filename: "index_bundle.js",
   },
+  devtool: "source-map",
   target: "web",
   devServer: {
     port: "3000",
@@ -17,6 +18,7 @@ module.exports = {
     open: true,
     hot: true,
     liveReload: true,
+    historyApiFallback: true,
   },
   resolve: {
     extensions: [".js", ".jsx", ".json"],
@@ -25,8 +27,13 @@ module.exports = {
     rules: [
       {
         test: /\.(js|jsx)$/,
+        enforce: "pre",
         exclude: /node_modules/,
-        use: "babel-loader",
+        use: ["babel-loader", "source-map-loader"],
+      },
+      {
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader"],
       },
     ],
   },
